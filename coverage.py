@@ -86,5 +86,5 @@ class CallbackModule(CallbackBase):
 
     def v2_playbook_on_stats(self, stats):
         self._aggregate_counters(stats)
-        if self.coverage > 0.0:
+        if self.num_tested_tasks > 0:
             self._prints_report()
