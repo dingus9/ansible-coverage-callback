@@ -48,17 +48,22 @@ class CallbackModule(CallbackBase):
             self._result[task_name] = True
 
     def _prints_report(self):
+        coverage_color = C.COLOR_ERROR
+        unreachable_color = coverage_color
         if self.num_tested_tasks == self.num_changed_tasks:
-            color = C.COLOR_OK
-        else:
-            color = C.COLOR_ERROR
+            coverage_color = C.COLOR_OK
+            unreachable_color = None
 
         self._display.banner('COVERAGE')
-        self._display.display(u"report: %s %s %s" % (
-            colorize(u'coverage', '%.0f' % self.coverage, color),
+        self._display.display(u"%-26s : %s %s %s %s" % (
+            'report',
+            colorize(u'coverage', '%.0f' % self.coverage, coverage_color),
             colorize(u'ok', self.num_tested_tasks, C.COLOR_OK),
-            colorize(u'changed', self.num_changed_tasks, None)
+            colorize(u'changed', self.num_changed_tasks, C.COLOR_CHANGED),
+            colorize(u'unreachable', self.num_tested_tasks-self.num_changed_tasks, unreachable_color)
             ), screen_only=True)
+
+        self._display.display("", screen_only=True)
 
     def _aggregate_counters(self, stats):
         hosts = sorted(stats.processed.keys())
