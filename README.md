@@ -1,5 +1,7 @@
 # ansible-coverage-callback
 
+Coverage Tool for Ansible.
+
 ## Requirements
 
 * Ansible >=2.4
