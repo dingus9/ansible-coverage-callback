@@ -56,7 +56,7 @@ class CallbackModule(CallbackBase):
         self._display.banner('COVERAGE')
         self._display.display(u"report : %s %s %s" % (
             colorize(u'coverage', '%.0f' % self.coverage, color),
-            colorize(u'total', self.num_tested_tasks, C.COLOR_OK),
+            colorize(u'ok', self.num_tested_tasks, C.COLOR_OK),
             colorize(u'changed', self.num_changed_tasks, None)
             ), screen_only=True)
 
@@ -86,4 +86,5 @@ class CallbackModule(CallbackBase):
 
     def v2_playbook_on_stats(self, stats):
         self._aggregate_counters(stats)
-        self._prints_report()
+        if self.coverage > 0.0:
+            self._prints_report()
