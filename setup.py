@@ -10,9 +10,9 @@ VSRE = r"CALLBACK\_VERSION\s\=\s['\"]([^'\"]*)['\"]"
 
 def get_version():
     verstrline = open(VERSIONFILE, "rt").read()
-    mo = re.search(VSRE, verstrline, re.M)
-    if mo:
-        return mo.group(1)
+    re_result = re.search(VSRE, verstrline, re.M)
+    if re_result:
+        return re_result.group(1)
     else:
         raise RuntimeError(
             "Unable to find version string in %s." % VERSIONFILE)
@@ -31,15 +31,4 @@ setup(
         'ansible>=2.4'
     ],
     include_package_data=True,
-    classifiers=[
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Natural Language :: English',
-        ],
 )

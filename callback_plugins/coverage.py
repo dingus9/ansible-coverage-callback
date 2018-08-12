@@ -65,13 +65,14 @@ class CallbackModule(CallbackBase):
             coverage_color = C.COLOR_OK
             unreachable_color = None
 
+        num_unreachable_tasks = self.num_tested_tasks-self.num_changed_tasks
         self._display.banner('COVERAGE')
         self._display.display(u"%-26s : %s %s %s %s" % (
             self.playbook_name,
             colorize(u'coverage', '%.0f' % self.coverage, coverage_color),
             colorize(u'ok', self.num_tested_tasks, C.COLOR_OK),
             colorize(u'changed', self.num_changed_tasks, C.COLOR_CHANGED),
-            colorize(u'unreachable', self.num_tested_tasks-self.num_changed_tasks, unreachable_color)
+            colorize(u'unreachable', num_unreachable_tasks, unreachable_color)
             ), screen_only=True)
 
         self._display.display("", screen_only=True)
