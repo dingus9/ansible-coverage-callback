@@ -13,3 +13,17 @@
 [defaults]
 callback_whitelist = coverage
 ```
+
+## Skip coverage tag
+
+You may skip task or tasks from coverage report by adding `skip_coverage` tag:
+
+```
+---
+- name: Test handler
+  command: whoami
+  when:
+    - test_var == False
+  tags:
+    - skip_coverage
+```
