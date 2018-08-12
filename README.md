@@ -29,3 +29,7 @@ You may skip task or tasks from coverage report by adding `skip_coverage` tag:
   tags:
     - skip_coverage
 ```
+
+## Acknowledged issues
+
+* Handled tasks has no tags, so it can't be skipped
