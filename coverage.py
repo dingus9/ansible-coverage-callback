@@ -54,7 +54,7 @@ class CallbackModule(CallbackBase):
             color = C.COLOR_ERROR
 
         self._display.banner('COVERAGE')
-        self._display.display(u"report : %s %s %s" % (
+        self._display.display(u"report: %s %s %s" % (
             colorize(u'coverage', '%.0f' % self.coverage, color),
             colorize(u'ok', self.num_tested_tasks, C.COLOR_OK),
             colorize(u'changed', self.num_changed_tasks, None)
