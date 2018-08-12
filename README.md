@@ -32,7 +32,7 @@ You may skip task or tasks from coverage report by adding `skip_coverage` tag:
 
 ## Acknowledged issues
 
-* Actually it's not a Python package and it can't be installed from pip
+* Actually it's not a Python package and can't be installed from pip
 * Handled tasks has no tags, so it can't be skipped
 * There is some magic hacks for skipping Molecule's system playbooks
 * Tasks from non imported files are not counted
