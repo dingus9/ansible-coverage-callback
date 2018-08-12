@@ -22,7 +22,6 @@ def get_version():
 
 class Installer(install):
     def run(self):
-        # Regular install
         install.run(self)
 
         print 'Creating Ansible Callback symlink'
