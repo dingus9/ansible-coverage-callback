@@ -24,8 +24,16 @@ class CallbackModule(CallbackBase):
     CALLBACK_NAME = 'coverage'
     CALLBACK_NEEDS_WHITELIST = True
 
+    MOLECULE_ENV_CURSOR = 'MOLECULE_SCENARIO_NAME'
+
     def __init__(self):
         super(CallbackModule, self).__init__()
+
+        self.molecule_env = False
+        self.molecule_env_playbooks = [
+            'destroy',
+            'create',
+        ]
 
         self.playbook_name = ""
         self.num_tested_tasks = 0
@@ -87,6 +95,8 @@ class CallbackModule(CallbackBase):
             self.coverage = self.num_changed_tasks * 100.0 / self.num_tested_tasks
 
     def v2_playbook_on_start(self, playbook):
+        if self.MOLECULE_ENV_CURSOR in os.environ:
+            self.molecule_env = True
         self.playbook_name = os.path.splitext(os.path.basename(playbook._file_name))[0]
 
     def v2_runner_on_skipped(self, result):
@@ -96,6 +106,8 @@ class CallbackModule(CallbackBase):
         self._register_task(result, False)
 
     def v2_playbook_on_stats(self, stats):
+        if self.playbook_name in self.molecule_env_playbooks:
+            return
         self._aggregate_counters(stats)
         if self.num_tested_tasks > 0:
             self._prints_report()
