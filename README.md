@@ -33,3 +33,5 @@ You may skip task or tasks from coverage report by adding `skip_coverage` tag:
 ## Acknowledged issues
 
 * Handled tasks has no tags, so it can't be skipped
+* There is some magic hacks for skipping Molecule's system playbooks
+* Tasks from non imported files are not counted
