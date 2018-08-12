@@ -28,7 +28,8 @@ class Installer(install):
         print 'Creating Ansible Callback symlink'
 
         home = expanduser('~')
-        callback_plugins_dir = os.path.join(home, '.ansible/plugins/callback_plugins')
+        # https://docs.ansible.com/ansible/2.4/config.html#default-callback-plugin-path
+        callback_plugins_dir = os.path.join(home, '.ansible/plugins/callback')
         callback_plugins_dist_file = os.path.join(self.install_lib, 'callback_plugins', 'coverage.py')
         callback_plugins_user_file = os.path.join(callback_plugins_dir, 'coverage.py')
 
