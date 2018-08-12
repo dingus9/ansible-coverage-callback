@@ -1,0 +1,10 @@
+#! /usr/bin/env ansible-playbook -i .test-hosts
+
+---
+- name: Test
+  hosts: all
+  roles:
+    - role: test
+      test_var: true
+    - role: test
+      test_var: false

@@ -1,0 +1,7 @@
+---
+- name: Test handler
+  command: whoami
+  when:
+    - test_var == False
+  tags:
+    - skip_coverage
