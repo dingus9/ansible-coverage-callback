@@ -1,13 +1,13 @@
 import os
 import re
 
-from os.path import expanduser
+from os import path
 from setuptools import setup, find_packages
 from setuptools.command.install import install
 
 
 READMEFILE = "README.md"
-VERSIONFILE = os.path.join("callback_plugins", "coverage.py")
+VERSIONFILE = path.join("callback_plugins", "coverage.py")
 VSRE = r"CALLBACK\_VERSION\s\=\s['\"]([^'\"]*)['\"]"
 
 
@@ -27,16 +27,16 @@ class Installer(install):
 
         print 'Creating Ansible Callback symlink'
 
-        home = expanduser('~')
         # https://docs.ansible.com/ansible/2.4/config.html#default-callback-plugin-path
-        callback_plugins_dir = os.path.join(home, '.ansible/plugins/callback')
-        callback_plugins_dist_file = os.path.join(self.install_lib, 'callback_plugins', 'coverage.py')
-        callback_plugins_user_file = os.path.join(callback_plugins_dir, 'coverage.py')
+        home = path.expanduser('~')
+        callback_plugins_dir = path.join(home, '.ansible/plugins/callback')
+        callback_plugins_dist_file = path.join(self.install_lib, 'callback_plugins', 'coverage.py')
+        callback_plugins_user_file = path.join(callback_plugins_dir, 'coverage.py')
 
-        if not os.path.exists(callback_plugins_dir):
+        if not path.exists(callback_plugins_dir):
             os.makedirs(callback_plugins_dir)
 
-        if os.path.exists(callback_plugins_user_file):
+        if path.exists(callback_plugins_user_file):
             os.remove(callback_plugins_user_file)
 
         os.symlink(callback_plugins_dist_file, callback_plugins_user_file)
