@@ -6,6 +6,8 @@ Simple Ansible coverage callback
 
 __metaclass__ = type
 
+import os
+
 from ansible import constants as C
 from ansible.utils.color import colorize
 from ansible.plugins.callback import CallbackBase
@@ -25,6 +27,7 @@ class CallbackModule(CallbackBase):
     def __init__(self):
         super(CallbackModule, self).__init__()
 
+        self.playbook_name = ""
         self.num_tested_tasks = 0
         self.num_changed_tasks = 0
         self.coverage = 0.0
@@ -56,7 +59,7 @@ class CallbackModule(CallbackBase):
 
         self._display.banner('COVERAGE')
         self._display.display(u"%-26s : %s %s %s %s" % (
-            'report',
+            self.playbook_name,
             colorize(u'coverage', '%.0f' % self.coverage, coverage_color),
             colorize(u'ok', self.num_tested_tasks, C.COLOR_OK),
             colorize(u'changed', self.num_changed_tasks, C.COLOR_CHANGED),
@@ -82,6 +85,9 @@ class CallbackModule(CallbackBase):
 
         if self.num_changed_tasks > 0:
             self.coverage = self.num_changed_tasks * 100.0 / self.num_tested_tasks
+
+    def v2_playbook_on_start(self, playbook):
+        self.playbook_name = os.path.splitext(os.path.basename(playbook._file_name))[0]
 
     def v2_runner_on_skipped(self, result):
         self._register_task(result, True)
