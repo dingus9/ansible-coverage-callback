@@ -1,5 +1,7 @@
 # ansible-coverage-callback
 
+[![Latest version](https://img.shields.io/pypi/v/ansible-coverage-callback.svg)](https://pypi.python.org/pypi/ansible-coverage-callback/)
+
 Coverage Tool for Ansible.
 
 ## Requirements
