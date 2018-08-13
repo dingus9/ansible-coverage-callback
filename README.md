@@ -1,6 +1,7 @@
 # ansible-coverage-callback
 
 [![Latest version](https://img.shields.io/pypi/v/ansible-coverage-callback.svg)](https://pypi.python.org/pypi/ansible-coverage-callback/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Coverage Tool for Ansible.
 
@@ -10,8 +11,13 @@ Coverage Tool for Ansible.
 
 ## Installation
 
-* Copy `callback_plugins/coverage.py` to your playbook callback directory (by default `callback_plugins/` in your playbook's root directory). Create the directory if it doesn't exist;
-* Be sure to whitelist the plugin in your `ansible.cfg`:
+Install this Ansible plugin with:
+
+```
+$ pip install ansible-coverage-callback
+```
+
+Be sure to whitelist the plugin in your `ansible.cfg`:
 
 ```
 [defaults]
