@@ -19,7 +19,7 @@ class CallbackModule(CallbackBase):
     ref: https://docs.ansible.com/ansible/2.5/dev_guide/developing_plugins.html
     ref: https://docs.ansible.com/ansible/2.6/plugins/callback.html
     """
-    CALLBACK_VERSION = '1.0.0'
+    CALLBACK_VERSION = '1.0.1'
     CALLBACK_TYPE = 'aggregate'
     CALLBACK_NAME = 'coverage'
     CALLBACK_NEEDS_WHITELIST = True
@@ -58,6 +58,17 @@ class CallbackModule(CallbackBase):
         if result._result.get('changed', True):
             self._result[task_name] = True
 
+    def _prints_calls(self):
+        for task_name in self._result:
+            result = self._result[task_name]
+            task_color = None
+            if result:
+                msg = u"{0:-<{2}}{1:->9}".format(task_name + u' ', u' changed', self._display.columns - 9)
+            else:
+                task_color = C.COLOR_SKIP
+                msg = u"{0:-<{2}}{1:->9}".format(task_name + u' ', u' skipped', self._display.columns - 9)
+            self._display.display(msg, task_color)
+
     def _prints_report(self):
         coverage_color = C.COLOR_ERROR
         unreachable_color = coverage_color
@@ -67,6 +78,7 @@ class CallbackModule(CallbackBase):
 
         num_unreachable_tasks = self.num_tested_tasks-self.num_changed_tasks
         self._display.banner('COVERAGE')
+        self._prints_calls()
         self._display.display(u"%-26s : %s %s %s %s" % (
             self.playbook_name,
             colorize(u'coverage', '%.0f' % self.coverage, coverage_color),
