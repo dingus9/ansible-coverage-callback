@@ -19,7 +19,7 @@ class CallbackModule(CallbackBase):
     ref: https://docs.ansible.com/ansible/2.5/dev_guide/developing_plugins.html
     ref: https://docs.ansible.com/ansible/2.6/plugins/callback.html
     """
-    CALLBACK_VERSION = '1.0.1'
+    CALLBACK_VERSION = '1.0.2'
     CALLBACK_TYPE = 'aggregate'
     CALLBACK_NAME = 'coverage'
     CALLBACK_NEEDS_WHITELIST = True
@@ -50,13 +50,12 @@ class CallbackModule(CallbackBase):
             return
 
         if task_name not in self._result:
-            self._result[task_name] = False
+            self._result[task_name] = not skipped
 
         if skipped:
             return
 
-        if result._result.get('changed', True):
-            self._result[task_name] = True
+        self._result[task_name] = True
 
     def _prints_calls(self):
         for task_name in self._result:
