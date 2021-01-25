@@ -31,7 +31,7 @@ class CallbackModule(CallbackBase):
     MOLECULE_ENV_CURSOR = 'MOLECULE_SCENARIO_NAME'
 
     RUN_STATES = ('changed', 'ok', 'failed')
-    NOT_RUN_STATS = ('skipped', 'unreachable', 'no_hosts')
+    NOT_RUN_STATES = ('skipped', 'unreachable', 'no_hosts')
 
     def __init__(self):
         super(CallbackModule, self).__init__()
@@ -52,7 +52,8 @@ class CallbackModule(CallbackBase):
         self._result = {}
 
     def _register_task(self, result, status):
-        assert status in ('skipped', 'unreachable', 'no_hosts', 'ok', 'failed')
+        assert status in ('skipped', 'unreachable', 'no_hosts', 'ok', 'failed'), (
+            'Unhandled coverage task status type {status}'.format(status=status))
         if 'skip_coverage' in result._task.tags:
             return
 
@@ -151,19 +152,19 @@ class CallbackModule(CallbackBase):
         else:
             self.playbook_name = os.path.splitext(os.path.basename(playbook._file_name))[0]
 
-    def v2_runner_on_skipped(self, result):
+    def v2_runner_on_skipped(self, result, **kwargs):
         self._register_task(result, 'skipped')
 
-    def v2_runner_on_ok(self, result):
+    def v2_runner_on_ok(self, result, **kwargs):
         self._register_task(result, 'ok')
 
-    def v2_runner_on_failed(self, result):
+    def v2_runner_on_failed(self, result, **kwargs):
         self._register_task(result, 'failed')
 
-    def v2_runner_on_unreachable(self, result):
+    def v2_runner_on_unreachable(self, result, **kwargs):
         self._register_task(result, 'unreachable')
 
-    def v2_runner_on_no_hosts(self, result):
+    def v2_runner_on_no_hosts(self, result, **kwargs):
         self._register_task(result, 'hosts')
 
     def v2_playbook_on_stats(self, stats):
